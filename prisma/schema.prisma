@@ -1,0 +1,86 @@
+// FINTARA — schema SQLite (ganti ke postgresql untuk produksi: ubah provider + DATABASE_URL)
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+/// Status item wishlist; READY di-set otomatis saat masa pending berakhir (sync di server).
+enum WishlistStatus {
+  PENDING_COOLING
+  READY
+  BOUGHT
+  SKIPPED
+}
+
+enum AlertType {
+  WARNING
+  CAUTION
+}
+
+model User {
+  id             String          @id @default(cuid())
+  email          String          @unique
+  passwordHash   String
+  name           String?
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  monthlyBudgets MonthlyBudget[]
+  wishlistItems  WishlistItem[]
+  alertLogs      AlertLog[]
+}
+
+/// Satu baris budget per user per bulan (format monthYear: "YYYY-MM").
+model MonthlyBudget {
+  id            String         @id @default(cuid())
+  userId        String
+  user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  monthYear     String
+  totalIncome   Int /// nominal dalam Rupiah (bilangan bulat)
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  necessities   Necessity[]
+  wishlistItems WishlistItem[]
+
+  @@unique([userId, monthYear])
+}
+
+model Necessity {
+  id        String        @id @default(cuid())
+  budgetId  String
+  budget    MonthlyBudget @relation(fields: [budgetId], references: [id], onDelete: Cascade)
+  name      String
+  amount    Int /// Rupiah
+  createdAt DateTime      @default(now())
+}
+
+model WishlistItem {
+  id               String          @id @default(cuid())
+  userId           String
+  user             User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  budgetId         String
+  budget           MonthlyBudget   @relation(fields: [budgetId], references: [id], onDelete: Cascade)
+  name             String
+  price            Int /// Rupiah
+  /// Waktu server saat cooling-off selesai; sumber kebenaran untuk timer (persisten).
+  coolingOffEndsAt DateTime
+  status           WishlistStatus  @default(PENDING_COOLING)
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+  alertLogs        AlertLog[]
+}
+
+/// Riwayat alert saat menambah wishlist (smart balance).
+model AlertLog {
+  id             String        @id @default(cuid())
+  userId         String
+  user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  wishlistItemId String?
+  wishlistItem   WishlistItem? @relation(fields: [wishlistItemId], references: [id], onDelete: SetNull)
+  alertType      AlertType
+  message        String
+  createdAt      DateTime      @default(now())
+}
