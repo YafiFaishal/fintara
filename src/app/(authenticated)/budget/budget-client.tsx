@@ -110,20 +110,20 @@ export function BudgetClient({ initialMonth }: { initialMonth: string }) {
 
   return (
     <div className="space-y-6">
-      <div className="rounded-2xl border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900">
+      <div className="glass-card p-4">
         <label className="block">
-          <span className="text-sm font-medium text-zinc-700 dark:text-zinc-300">Bulan (YYYY-MM)</span>
+          <span className="text-sm font-medium text-[#1a1a2e] dark:text-white">Bulan (YYYY-MM)</span>
           <input
             type="month"
-            className="mt-1 w-full rounded-xl border border-zinc-200 px-3 py-2 dark:border-zinc-700 dark:bg-zinc-950"
+            className="glass-input mt-1 w-full px-3 py-2"
             value={monthYear}
             onChange={(e) => setMonthYear(e.target.value)}
           />
         </label>
-        <p className="mt-1 text-xs text-zinc-500">Default mengikuti bulan ini: {getMonthYear()}</p>
+        <p className="mt-1 text-xs text-slate-600 dark:text-white/60">Default mengikuti bulan ini: {getMonthYear()}</p>
       </div>
 
-      <div className="rounded-2xl border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900">
+      <div className="glass-card p-4">
         <InputField
           label="Total pemasukan / saldo bulanan (Rp)"
           type="text"
@@ -134,9 +134,9 @@ export function BudgetClient({ initialMonth }: { initialMonth: string }) {
         />
       </div>
 
-      <div className="rounded-2xl border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900">
+      <div className="glass-card p-4">
         <div className="mb-3 flex items-center justify-between">
-          <h2 className="font-semibold text-zinc-900 dark:text-zinc-50">Kebutuhan pokok</h2>
+          <h2 className="font-semibold text-[#1a1a2e] dark:text-white">Kebutuhan pokok</h2>
           <Button type="button" variant="secondary" className="text-xs" onClick={addRow}>
             + Baris
           </Button>
@@ -172,10 +172,10 @@ export function BudgetClient({ initialMonth }: { initialMonth: string }) {
       </div>
 
       {cleanBalance !== null ? (
-        <div className="rounded-2xl border border-emerald-200 bg-emerald-50/80 p-4 dark:border-emerald-800 dark:bg-emerald-950/30">
+        <div className="glass-alert-safe p-4">
           <p className="text-sm font-medium text-emerald-900 dark:text-emerald-200">Saldo aman (otomatis)</p>
           <p className="mt-1 text-2xl font-bold tabular-nums text-emerald-800 dark:text-emerald-100">
-            {formatIDR(cleanBalance)}
+            ✓ {formatIDR(cleanBalance)}
           </p>
           <p className="mt-1 text-xs text-emerald-800/80 dark:text-emerald-300/80">
             Pemasukan dikurangi total kebutuhan pokok di atas.
@@ -184,9 +184,9 @@ export function BudgetClient({ initialMonth }: { initialMonth: string }) {
       ) : null}
 
       {message ? (
-        <p className="text-sm font-medium text-emerald-700 dark:text-emerald-400">{message}</p>
+        <p className="glass-alert-safe px-3 py-2 text-sm font-medium text-emerald-800 dark:text-emerald-100">✓ {message}</p>
       ) : null}
-      {error ? <p className="text-sm text-rose-600">{error}</p> : null}
+      {error ? <p className="glass-alert-danger px-3 py-2 text-sm text-rose-800 dark:text-rose-100">⚠ {error}</p> : null}
 
       <Button type="button" variant="primary" className="w-full" disabled={loading} onClick={save}>
         {loading ? "Menyimpan…" : "Simpan budget"}

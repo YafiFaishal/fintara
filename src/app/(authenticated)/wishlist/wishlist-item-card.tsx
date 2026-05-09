@@ -58,14 +58,14 @@ export function WishlistItemCard({ item }: Props) {
   }
 
   return (
-    <article className="rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
+    <article className="glass-card p-4">
       <div className="flex flex-col gap-1 sm:flex-row sm:items-start sm:justify-between">
         <div>
-          <h3 className="font-semibold text-zinc-900 dark:text-zinc-50">{item.name}</h3>
-          <p className="text-lg font-bold tabular-nums text-zinc-800 dark:text-zinc-100">
+          <h3 className="font-semibold text-[#1a1a2e] dark:text-white">{item.name}</h3>
+          <p className="text-lg font-bold tabular-nums text-slate-800 dark:text-white">
             {formatIDR(item.price)}
           </p>
-          <p className="text-xs text-zinc-500">
+          <p className="text-xs text-slate-600 dark:text-white/60">
             Aturan timer: {coolingOffLabel(item.price)} · berakhir{" "}
             {endDate.toLocaleString("id-ID")}
           </p>
@@ -74,11 +74,11 @@ export function WishlistItemCard({ item }: Props) {
           className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-medium ${
             isClosed
               ? item.status === "BOUGHT"
-                ? "bg-emerald-100 text-emerald-800"
-                : "bg-zinc-100 text-zinc-600"
+                ? "glass-alert-safe text-emerald-800 dark:text-emerald-100"
+                : "bg-white/55 text-slate-700 ring-1 ring-slate-900/10 dark:bg-white/10 dark:text-white/70 dark:ring-white/10"
               : canDecide
-                ? "bg-amber-100 text-amber-900"
-                : "bg-sky-100 text-sky-900"
+                ? "glass-alert-caution text-amber-900 dark:text-amber-100"
+                : "bg-cyan-100/70 text-cyan-900 ring-1 ring-cyan-500/20 dark:bg-cyan-400/15 dark:text-cyan-100 dark:ring-cyan-300/20"
           }`}
         >
           {item.status === "PENDING_COOLING" && !coolingDone && "Cooling-off"}
@@ -94,13 +94,13 @@ export function WishlistItemCard({ item }: Props) {
           {item.alertLogs.map((a) => (
             <li
               key={a.id}
-              className={`rounded-lg px-3 py-2 text-sm ${
+              className={`px-3 py-2 text-sm ${
                 a.alertType === "WARNING"
-                  ? "border border-rose-200 bg-rose-50 text-rose-900 dark:border-rose-900 dark:bg-rose-950/50 dark:text-rose-100"
-                  : "border border-amber-200 bg-amber-50 text-amber-900 dark:border-amber-900 dark:bg-amber-950/40 dark:text-amber-100"
+                  ? "glass-alert-danger text-rose-900 dark:text-rose-100"
+                  : "glass-alert-caution text-amber-900 dark:text-amber-100"
               }`}
             >
-              <strong className="mr-1">{a.alertType === "WARNING" ? "Peringatan:" : "Hati-hati:"}</strong>
+              <strong className="mr-1">{a.alertType === "WARNING" ? "⚠ Peringatan:" : "⚠ Hati-hati:"}</strong>
               {a.message}
             </li>
           ))}
@@ -116,7 +116,7 @@ export function WishlistItemCard({ item }: Props) {
         </div>
       ) : null}
 
-      {err ? <p className="mt-2 text-sm text-rose-600">{err}</p> : null}
+      {err ? <p className="glass-alert-danger mt-2 px-3 py-2 text-sm text-rose-800 dark:text-rose-100">⚠ {err}</p> : null}
 
       {!isClosed && canDecide ? (
         <div className="mt-4 flex flex-wrap gap-2">

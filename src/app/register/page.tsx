@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { useState } from "react";
+import { BrandLogo } from "@/components/branding/brand-logo";
 import { Button } from "@/components/ui/button";
 import { InputField } from "@/components/ui/input-field";
 
@@ -50,15 +51,18 @@ export default function RegisterPage() {
 
   return (
     <div className="mx-auto flex min-h-full max-w-md flex-col justify-center px-4 py-12">
-      <h1 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50">Daftar</h1>
-      <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
+      <div className="glass-card mb-5 flex items-center justify-center py-5">
+        <BrandLogo size="md" />
+      </div>
+      <h1 className="text-2xl font-bold text-[#1a1a2e] dark:text-white">Buat akun FINTARA</h1>
+      <p className="mt-1 text-sm text-slate-700 dark:text-white/70">
         Sudah punya akun?{" "}
-        <Link href="/login" className="font-medium text-emerald-700 underline dark:text-emerald-400">
+        <Link href="/login" className="font-medium text-cyan-700 underline dark:text-cyan-300">
           Masuk
         </Link>
       </p>
 
-      <form onSubmit={onSubmit} className="mt-8 space-y-4">
+      <form onSubmit={onSubmit} className="glass-card mt-8 space-y-4 p-4">
         <InputField label="Nama (opsional)" value={name} onChange={(e) => setName(e.target.value)} />
         <InputField
           label="Email"
@@ -76,7 +80,7 @@ export default function RegisterPage() {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        {error ? <p className="text-sm text-rose-600">{error}</p> : null}
+        {error ? <p className="glass-alert-danger px-3 py-2 text-sm text-rose-800 dark:text-rose-100">⚠ {error}</p> : null}
         <Button type="submit" variant="primary" className="w-full" disabled={loading}>
           {loading ? "Memproses…" : "Buat akun"}
         </Button>

@@ -36,15 +36,15 @@ export function LoginForm() {
 
   return (
     <>
-      <h1 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50">Masuk</h1>
-      <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
+      <h1 className="text-2xl font-bold text-[#1a1a2e] dark:text-white">Masuk ke FINTARA</h1>
+      <p className="mt-1 text-sm text-slate-700 dark:text-white/70">
         Belum punya akun?{" "}
-        <Link href="/register" className="font-medium text-emerald-700 underline dark:text-emerald-400">
+        <Link href="/register" className="font-medium text-cyan-700 underline dark:text-cyan-300">
           Daftar
         </Link>
       </p>
 
-      <form onSubmit={onSubmit} className="mt-8 space-y-4">
+      <form onSubmit={onSubmit} className="glass-card mt-8 space-y-4 p-4">
         <InputField
           label="Email"
           type="email"
@@ -63,7 +63,7 @@ export function LoginForm() {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        {error ? <p className="text-sm text-rose-600">{error}</p> : null}
+        {error ? <p className="glass-alert-danger px-3 py-2 text-sm text-rose-800 dark:text-rose-100">⚠ {error}</p> : null}
         <Button type="submit" variant="primary" className="w-full" disabled={loading}>
           {loading ? "Memproses…" : "Masuk"}
         </Button>

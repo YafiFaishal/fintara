@@ -22,7 +22,7 @@ export function CoolingCountdown({ endsAt, onDone }: Props) {
 
   const remaining = Math.max(0, end - now);
   if (remaining === 0) {
-    return <span className="font-medium text-emerald-600">Selesai — kamu bisa memutuskan</span>;
+    return <span className="font-medium text-emerald-700 dark:text-emerald-300">✓ Selesai — kamu bisa memutuskan</span>;
   }
 
   const s = Math.floor(remaining / 1000);
@@ -38,7 +38,7 @@ export function CoolingCountdown({ endsAt, onDone }: Props) {
   else text = `${sec} detik`;
 
   return (
-    <span className="tabular-nums text-zinc-700 dark:text-zinc-300">
+    <span className="tabular-nums text-slate-700 dark:text-white/70">
       Sisa waktu: <strong>{text}</strong>
     </span>
   );

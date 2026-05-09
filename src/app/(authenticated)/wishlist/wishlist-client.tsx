@@ -90,35 +90,36 @@ export function WishlistClient({ initialMonth }: { initialMonth: string }) {
 
   return (
     <div className="space-y-6">
-      <div className="rounded-2xl border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900">
+      <div className="glass-card p-4">
         <label className="block">
-          <span className="text-sm font-medium text-zinc-700 dark:text-zinc-300">Bulan wishlist</span>
+          <span className="text-sm font-medium text-[#1a1a2e] dark:text-white">Bulan wishlist</span>
           <input
             type="month"
-            className="mt-1 w-full rounded-xl border border-zinc-200 px-3 py-2 dark:border-zinc-700 dark:bg-zinc-950"
+            className="glass-input mt-1 w-full px-3 py-2"
             value={monthYear}
             onChange={(e) => setMonthYear(e.target.value)}
           />
         </label>
-        <p className="mt-1 text-xs text-zinc-500">Harus sama dengan bulan budget. Hari ini: {getMonthYear()}</p>
+        <p className="mt-1 text-xs text-slate-600 dark:text-white/60">Harus sama dengan bulan budget. Hari ini: {getMonthYear()}</p>
       </div>
 
       {data ? (
-        <div className="rounded-2xl border border-emerald-200 bg-emerald-50/80 p-4 dark:border-emerald-900 dark:bg-emerald-950/30">
+        <div className="glass-alert-safe p-4">
           <p className="text-sm font-medium text-emerald-900 dark:text-emerald-200">Saldo aman (referensi)</p>
           <p className="mt-1 text-xl font-bold tabular-nums text-emerald-800 dark:text-emerald-100">
-            {formatIDR(data.cleanBalance)}
+            ✓ {formatIDR(data.cleanBalance)}
           </p>
           {!data.budgetId ? (
-            <p className="mt-2 text-sm text-rose-700 dark:text-rose-300">
+            <p className="glass-alert-danger mt-2 px-3 py-2 text-sm text-rose-800 dark:text-rose-100">
+              ⚠{" "}
               Belum ada budget untuk bulan ini — atur di menu Budget dulu.
             </p>
           ) : null}
         </div>
       ) : null}
 
-      <form onSubmit={addItem} className="space-y-4 rounded-2xl border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900">
-        <h2 className="font-semibold text-zinc-900 dark:text-zinc-50">Barang incaran</h2>
+      <form onSubmit={addItem} className="glass-card space-y-4 p-4">
+        <h2 className="font-semibold text-[#1a1a2e] dark:text-white">Barang incaran</h2>
         <InputField label="Nama barang" value={name} onChange={(e) => setName(e.target.value)} required />
         <InputField
           label="Harga (Rp)"
@@ -135,29 +136,29 @@ export function WishlistClient({ initialMonth }: { initialMonth: string }) {
             {inlinePreview.warnings.map((t, i) => (
               <div
                 key={`w-${i}`}
-                className="rounded-lg border border-rose-200 bg-rose-50 px-3 py-2 text-sm text-rose-900 dark:border-rose-900 dark:bg-rose-950/40 dark:text-rose-50"
+                className="glass-alert-danger px-3 py-2 text-sm text-rose-900 dark:text-rose-50"
               >
-                <strong>Peringatan: </strong>
+                <strong>⚠ Peringatan: </strong>
                 {t}
               </div>
             ))}
             {inlinePreview.cautions.map((t, i) => (
               <div
                 key={`c-${i}`}
-                className="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-950 dark:border-amber-900 dark:bg-amber-950/40 dark:text-amber-100"
+                className="glass-alert-caution px-3 py-2 text-sm text-amber-950 dark:text-amber-100"
               >
-                <strong>Hati-hati: </strong>
+                <strong>⚠ Hati-hati: </strong>
                 {t}
               </div>
             ))}
-            <p className="text-xs text-zinc-500">
+            <p className="text-xs text-slate-600 dark:text-white/60">
               Estimasi sisa saldo aman setelah beli:{" "}
-              <strong className="text-zinc-800 dark:text-zinc-200">{formatIDR(inlinePreview.remaining)}</strong>
+              <strong className="text-[#1a1a2e] dark:text-white">{formatIDR(inlinePreview.remaining)}</strong>
             </p>
           </div>
         ) : null}
 
-        {error ? <p className="text-sm text-rose-600">{error}</p> : null}
+        {error ? <p className="glass-alert-danger px-3 py-2 text-sm text-rose-800 dark:text-rose-100">⚠ {error}</p> : null}
 
         <Button type="submit" variant="primary" className="w-full" disabled={loading || !data?.budgetId}>
           {loading ? "Menyimpan…" : "Tambah ke wishlist"}
@@ -165,10 +166,10 @@ export function WishlistClient({ initialMonth }: { initialMonth: string }) {
       </form>
 
       <section>
-        <h2 className="mb-3 font-semibold text-zinc-900 dark:text-zinc-50">Daftar kamu</h2>
-        {loading && !data ? <p className="text-sm text-zinc-500">Memuat…</p> : null}
+        <h2 className="mb-3 font-semibold text-[#1a1a2e] dark:text-white">Daftar kamu</h2>
+        {loading && !data ? <p className="text-sm text-slate-600 dark:text-white/60">Memuat…</p> : null}
         {data?.items.length === 0 ? (
-          <p className="text-sm text-zinc-500">Belum ada barang. Tambahkan yang kamu pikirkan beli nanti.</p>
+          <p className="text-sm text-slate-600 dark:text-white/60">Belum ada barang. Tambahkan yang kamu pikirkan beli nanti.</p>
         ) : null}
         <div className="space-y-4">
           {data?.items.map((item) => (

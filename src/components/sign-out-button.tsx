@@ -8,7 +8,7 @@ export function SignOutButton() {
     <Button
       type="button"
       variant="ghost"
-      className="min-h-0 px-2 py-1 text-xs"
+      className="glass-btn-secondary min-h-0 px-3 py-1 text-xs"
       onClick={() => signOut({ callbackUrl: "/" })}
     >
       Keluar
